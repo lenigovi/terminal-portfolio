@@ -29,7 +29,11 @@ const Terminal = () => {
         } else if (command === "projects") {
         output = {
             text: "📌 Pose Detection\nI currently work on training images of jenga blocks for pose detection",
-            images: ["/pose.png", "/model.png"]
+            images: ["/pose.png", "/model.png"],
+            text2: "📌 Figure Estimation",
+            image2: "/posecarl.mp4",
+            text3: "📌 Robot Control",
+            image3: "/hmi.png"
         };
         setPath(["projects"]);
         } else if (command === "skills") {
@@ -60,32 +64,69 @@ const Terminal = () => {
           {/* <div>root@portfolio:{path.length > 0 ? '/' + path.join('/') : '~'} $ </div> */}
           {/* <div>root@portfolio:{path.length > 0 ? '/' + path.join('/') : '~'} $ {item.cmd} </div> */}
           <div>root@portfolio: $ {item.cmd}</div>
-          {item.output && (
-          typeof item.output === "object" && item.output !== null ? (
-            <div className="mb-10 flex flex-col md:flex-row items-start gap-4">
-              {item.output.images ? (
-                <div className="flex flex-row flex-wrap gap-4">
-                  {item.output.images.map((src, index) => (
-                    <img
-                      key={index}
-                      src={src}
-                      alt=""
-                      className="w-48 h-auto rounded border border-green-500 shadow"
-                    />
-                  ))}
-                </div>
-              ) : (
-                <img
-                  src={item.output.image}
-                  alt=""
-                  className="w-48 h-auto rounded border border-green-500 shadow"
-                />
-              )}
-              <pre className="whitespace-pre-wrap leading-relaxed">{item.output.text}</pre>
-            </div>
-          ) : (
-            <pre className="whitespace-pre-wrap">{item.output}</pre>
-          )
+          {item.output && typeof item.output === "object" && item.output !== null ? (
+          <div className="mb-10 flex flex-col gap-12">
+
+            {/* First text + multiple images (side by side) */}
+            {(item.output.text || item.output.images) && (
+              <div className="grid grid-cols-[17rem_1fr] gap-6 items-start">
+                {item.output.images && (
+                  <div className="flex flex-wrap gap-2">
+                    {item.output.images.map((src, index) => (
+                      <img
+                        key={index}
+                        src={src}
+                        alt=""
+                        className="w-96 h-auto rounded border border-green-500 shadow"
+                      />
+                    ))}
+                  </div>
+                )}
+                {item.output.text && (
+                  <pre className="whitespace-pre-wrap leading-relaxed">{item.output.text}</pre>
+                )}
+              </div>
+            )}
+
+            {/* Second text + video side by side */}
+            {(item.output.text2 || item.output.image2) && (
+              <div className="grid grid-cols-[17rem_1fr] gap-6 items-start">
+                {item.output.image2 && item.output.image2.endsWith(".mp4") ? (
+                  <video controls className="w-96 border border-green-500 shadow rounded">
+                    <source src={item.output.image2} type="video/mp4" />
+                  </video>
+                ) : item.output.image2 && (
+                  <img
+                    src={item.output.image2}
+                    alt=""
+                    className="w-48 h-auto rounded border border-green-500 shadow"
+                  />
+                )}
+                {item.output.text2 && (
+                  <pre className="whitespace-pre-wrap leading-relaxed">{item.output.text2}</pre>
+                )}
+              </div>
+            )}
+
+            {/* Third text + image side by side */}
+            {(item.output.text3 || item.output.image3) && (
+              <div className="grid grid-cols-[17rem_1fr] gap-6 items-start">
+                {item.output.image3 && (
+                  <img
+                    src={item.output.image3}
+                    alt=""
+                    className="w-96 h-auto rounded border border-green-500 shadow"
+                  />
+                )}
+                {item.output.text3 && (
+                  <pre className="whitespace-pre-wrap leading-relaxed">{item.output.text3}</pre>
+                )}
+              </div>
+            )}
+
+          </div>
+        ) : (
+          <pre className="whitespace-pre-wrap">{item.output}</pre>
         )}
         </div>
       ))}
