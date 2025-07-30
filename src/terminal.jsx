@@ -28,8 +28,8 @@ const Terminal = () => {
         setPath(["about"]);
         } else if (command === "projects") {
         output = {
-            text: "📌 Object Recognition for Kinematic Control\nI trained 300+ images.",
-            image: "/jenga.png"
+            text: "📌 Pose Detection\nI currently work on training images of jenga blocks for pose detection",
+            images: ["/pose.png", "/model.png"]
         };
         setPath(["projects"]);
         } else if (command === "skills") {
@@ -61,19 +61,32 @@ const Terminal = () => {
           {/* <div>root@portfolio:{path.length > 0 ? '/' + path.join('/') : '~'} $ {item.cmd} </div> */}
           <div>root@portfolio: $ {item.cmd}</div>
           {item.output && (
-            typeof item.output === "object" && item.output !== null ? (
-                <div className="mb-10 flex flex-col md:flex-row items-start gap-4">
-                <img
-                    src={item.output.image}
-                    alt=""
-                    className="w-48 h-auto rounded border border-green-500 shadow"
-                />
-                <pre className="whitespace-pre-wrap leading-relaxed">{item.output.text}</pre>
+          typeof item.output === "object" && item.output !== null ? (
+            <div className="mb-10 flex flex-col md:flex-row items-start gap-4">
+              {item.output.images ? (
+                <div className="flex flex-row flex-wrap gap-4">
+                  {item.output.images.map((src, index) => (
+                    <img
+                      key={index}
+                      src={src}
+                      alt=""
+                      className="w-48 h-auto rounded border border-green-500 shadow"
+                    />
+                  ))}
                 </div>
-            ) : (
-                <pre className="whitespace-pre-wrap">{item.output}</pre>
-            )
-            )}
+              ) : (
+                <img
+                  src={item.output.image}
+                  alt=""
+                  className="w-48 h-auto rounded border border-green-500 shadow"
+                />
+              )}
+              <pre className="whitespace-pre-wrap leading-relaxed">{item.output.text}</pre>
+            </div>
+          ) : (
+            <pre className="whitespace-pre-wrap">{item.output}</pre>
+          )
+        )}
         </div>
       ))}
       <div className="flex">
