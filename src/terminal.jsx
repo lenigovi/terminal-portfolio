@@ -28,7 +28,7 @@ const Terminal = () => {
     } else if (command === "about") {
       output = {
         text: "I'm a student at RWTH Aachen working at Bosch Connected Industry. I like robots, automation and bicycles.",
-        image: "/me.jpeg"
+        images: ["/me.jpeg"]
       };
       setPath(["about"]);
     } else if (command === "projects") {
