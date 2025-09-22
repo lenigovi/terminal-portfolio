@@ -28,7 +28,7 @@ const Terminal = () => {
       output = "Available commands: about, projects, skills, clear, hello";
     } else if (command === "about") {
       output = {
-        text: "I'm a student at RWTH Aachen working at Bosch Connected Industry. I like robots, automation and bicycles.",
+        text: "I'm a student at RWTH Aachen working as Werkstudent in automation industry. I like robots and bicycles very much.",
         images: ["/me.jpeg"]
       };
       setPath(["about"]);
@@ -47,7 +47,7 @@ const Terminal = () => {
         image3: "/hmi.png",
         tag3: "bosch",
 
-        text4: "📌 Multi 6-Axis Coordination with Moveit2 in ROS2",
+        text4: "📌 ROS2 Kinematic Calibration of two 6-Axis Robots with Moveit2",
         image4: ["/ros2_2.png", "sim.mp4"],
         tag4: ["rwth", "ros2"]
       };
@@ -61,7 +61,7 @@ const Terminal = () => {
         image2: "/posecarl.mp4",
         text3: "📌 Robot Control at Bosch",
         image3: "/hmi.png",
-        text4: "📌 ROS2 Kinematic Calibration of two 6-Axis Robots with Each Other Using Moveit2",
+        text4: "📌 ROS2 Kinematic Calibration of two 6-Axis Robots with Moveit2",
         image4: ["/ros2_2.png", "sim.mp4"],
       };
       setPath(["projects"]);
@@ -126,7 +126,7 @@ const Terminal = () => {
  // Rendering of media and text
   return (
     <div className="p-4">
-      <div className="mb-4 text-green-300">enter 'hello' to see commands</div>
+      <div className="mb-4 text-green-300">enter 'hello' to see commands or go through all commands with tab key</div>
       {history.map((item, i) => (                                  
         <div key={i}>
           <div>root@portfolio: $ {item.cmd}</div>
