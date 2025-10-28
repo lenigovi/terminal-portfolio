@@ -28,47 +28,30 @@ const Terminal = () => {
       output = "Available commands: about, projects, skills, clear, hello";
     } else if (command === "about") {
       output = {
-        text: "I'm a student at RWTH Aachen working as Werkstudent in automation industry. I like robots and bicycles very much.",
+        text: "I'm a student at RWTH Aachen working as Werkstudent in automation industry. I like robots and bicycles.",
         images: ["/me.jpeg"]
       };
       setPath(["about"]);
     } else if (command === "projects") {
       output = {
         filterable: true,
-        text: "📌 Detection of Pose and Gripping Points at Bosch\nI currently work on training images of jenga blocks in different scenarios",
-        images: ["/pose.png", "/model.png"],
-        tag: ["bosch", "computer vision"],
+        text: "Labeling & VLA",
+        image1: ["/vla_short.mp4"],
+        tag: ["machine learning", "vla"],
 
-        text2: "📌 Figure Estimation at RWTH Aachen",
+        text2: "Figure Estimation at RWTH Aachen",
         image2: "/posecarl.mp4",
         tag2: ["rwth", "computer vision"],
 
-        text3: "📌 Robot Control at Bosch",
-        image3: "/hmi.png",
-        tag3: "bosch",
-
-        text4: "📌 ROS2 Kinematic Calibration of two 6-Axis Robots with Moveit2",
+        text4: "ROS2 Kinematic Calibration of two 6-Axis Robots with Moveit2",
         image4: ["/ros2_2.png", "sim.mp4"],
         tag4: ["rwth", "ros2"]
       };
       setPath(["projects"]);
 
-      // ___________ old structure before filters _____________
-      {/* 
-        text: "📌 Detection of Pose and Gripping Points at Bosch\nI currently work on training images of jenga blocks in different scenarios",
-        images: ["/pose.png", "/model.png"],
-        text2: "📌 Figure Estimation at RWTH Aachen",
-        image2: "/posecarl.mp4",
-        text3: "📌 Robot Control at Bosch",
-        image3: "/hmi.png",
-        text4: "📌 ROS2 Kinematic Calibration of two 6-Axis Robots with Moveit2",
-        image4: ["/ros2_2.png", "sim.mp4"],
-      };
-      setPath(["projects"]);
-    */}
     } else if (command === "skills") {
       output = {
-        text: "Robotics • Computer Vision • AI • Git • Python • C++ • JavaScript"
+        text: "Robotics • Computer Vision • AI • Backend • Unit Tests • Git • Python • C++ • JavaScript"
       };
       setPath(["skills"]);
     } else {
@@ -135,7 +118,7 @@ const Terminal = () => {
             {/* Filters begin */}
               {item.output.filterable && (
                 <div className="mb-0 flex gap-2">
-                  {["all", "bosch", "rwth", "ros2", "computer vision"].map(tag => (
+                  {["all", "machine learning", "vla", "ros2", "computer vision"].map(tag => (
                     <button
                       key={tag}
                       onClick={() => setProjectFilter(tag)}
@@ -152,6 +135,34 @@ const Terminal = () => {
               )}
               {(projectFilter === "all" || item.output.tag?.includes(projectFilter)) && (    // Row 1
               <div className="grid grid-cols-[17rem_1fr] gap-6 items-start">
+                {Array.isArray(item.output.image1)
+                  ? item.output.image1.map((src, index) =>
+                      src.endsWith(".mp4") ? (
+                        <video key={index} controls className="w-96 border border-green-500 shadow rounded">
+                          <source src={src} type="video/mp4" />
+                        </video>
+                      ) : (
+                        <img
+                          key={index}
+                          src={src}
+                          alt=""
+                          className="w-96 h-auto rounded border border-green-500 shadow"
+                        />
+                      )
+                    )
+                  : typeof item.output.image1 === "string" && item.output.image1.endsWith(".mp4")
+                  ? (
+                      <video controls className="w-96 border border-green-500 shadow rounded">
+                        <source src={item.output.image1} type="video/mp4" />
+                      </video>
+                    )
+                  : typeof item.output.image1 === "string" && (
+                      <img
+                        src={item.output.image1}
+                        alt=""
+                        className="w-96 h-auto rounded border border-green-500 shadow"
+                      />
+                    )}
                 {item.output.images && (
                   <div className="flex flex-wrap gap-2">
                     {item.output.images.map((src, index) => (
@@ -187,7 +198,7 @@ const Terminal = () => {
                 )}
               </div>
             )}
-            {(projectFilter === "all" || item.output.tag3?.includes(projectFilter)) && (     // Row 3
+            {/* {(projectFilter === "all" || item.output.tag3?.includes(projectFilter)) && (     // Row 3
                 <div className="grid grid-cols-[17rem_1fr] gap-6 items-start">
                   {item.output.image3 && (
                     <img
@@ -200,7 +211,7 @@ const Terminal = () => {
                     <pre className="whitespace-pre-wrap leading-relaxed">{item.output.text3}</pre>
                   )}
                 </div>
-              )}
+              )} */}
               {(projectFilter === "all" || item.output.tag4?.includes(projectFilter)) && (     // Row 4
                 <div className="grid grid-cols-[17rem_1fr] gap-6 items-start">
                   {item.output.image4 && Array.isArray(item.output.image4) ? (
@@ -238,97 +249,6 @@ const Terminal = () => {
                   )}
                 </div>
               )}
-
-            {/* Old Structure before Filters
-              {(item.output.text || item.output.images) && (        // Row 1
-                <div className="grid grid-cols-[17rem_1fr] gap-6 items-start">
-                  {item.output.images && (
-                    <div className="flex flex-wrap gap-2">
-                      {item.output.images.map((src, index) => (
-                        <img
-                          key={index}
-                          src={src}
-                          alt=""
-                          className="w-96 h-auto rounded border border-green-500 shadow"
-                        />
-                      ))}
-                    </div>
-                  )}
-                  {item.output.text && (
-                    <pre className="whitespace-pre-wrap leading-relaxed">{item.output.text}</pre>
-                  )}
-                </div>
-              )}
-              {(item.output.text2 || item.output.image2) && (         // Row 2
-                <div className="grid grid-cols-[17rem_1fr] gap-6 items-start">
-                  {item.output.image2 && item.output.image2.endsWith(".mp4") ? (
-                    <video controls className="w-96 border border-green-500 shadow rounded">
-                      <source src={item.output.image2} type="video/mp4" />
-                    </video>
-                  ) : item.output.image2 && (
-                    <img
-                      src={item.output.image2}
-                      alt=""
-                      className="w-48 h-auto rounded border border-green-500 shadow"
-                    />
-                  )}
-                  {item.output.text2 && (
-                    <pre className="whitespace-pre-wrap leading-relaxed">{item.output.text2}</pre>
-                  )}
-                </div>
-              )}
-              {(item.output.text3 || item.output.image3) && (       // Row 3
-                <div className="grid grid-cols-[17rem_1fr] gap-6 items-start">
-                  {item.output.image3 && (
-                    <img
-                      src={item.output.image3}
-                      alt=""
-                      className="w-96 h-auto rounded border border-green-500 shadow"
-                    />
-                  )}
-                  {item.output.text3 && (
-                    <pre className="whitespace-pre-wrap leading-relaxed">{item.output.text3}</pre>
-                  )}
-                </div>
-              )}
-              {(item.output.text4 || item.output.image4) && (     // Row 4
-                <div className="grid grid-cols-[17rem_1fr] gap-6 items-start">
-                  {item.output.image4 && Array.isArray(item.output.image4) ? (
-                    <div className="flex flex-col gap-2">
-                      {item.output.image4.map((src, index) =>
-                        src.endsWith(".mp4") ? (
-                          <video key={index} controls className="w-96 border border-green-500 shadow rounded">
-                            <source src={src} type="video/mp4" />
-                          </video>
-                        ) : (
-                          <img
-                            key={index}
-                            src={src}
-                            alt=""
-                            className="w-96 h-auto rounded border border-green-500 shadow"
-                          />
-                        )
-                      )}
-                    </div>
-                  ) : item.output.image4 && (
-                    item.output.image4.endsWith(".mp4") ? (
-                      <video controls className="w-96 border border-green-500 shadow rounded">
-                        <source src={item.output.image4} type="video/mp4" />
-                      </video>
-                    ) : (
-                      <img
-                        src={item.output.image4}
-                        alt=""
-                        className="w-96 h-auto rounded border border-green-500 shadow"
-                      />
-                    )
-                  )}
-                  {item.output.text4 && (
-                    <pre className="whitespace-pre-wrap leading-relaxed">{item.output.text4}</pre>
-                  )}
-                </div>
-              )}
-              */}
             </div>
           ) : (
             <pre className="whitespace-pre-wrap">{item.output}</pre>

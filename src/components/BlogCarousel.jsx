@@ -15,15 +15,15 @@ Exponentials represent motions in joint space or {b}-space, therefore multiplica
 
 Forward kinematics of an n-joint serial manipulator is given as:
 `
-// formula in blogmodal.jsx
+// formula is in blogmodal.jsx !!
   },
   {
     id: 2,
     title: "Jacobian",
-    excerpt: "Mapping ",
+    excerpt: "Mapping joint properties to end effector properties",
     content: `
-Jacobian relates joint rates to the linear and angular velocities of the end-effector.
-Furthermore, provides a relationship between joint torques and resultant force and torque applied by the end effector. 
+Jacobian relates joint rates to the linear and angular velocities of the end-effector. Furthermore, provides a relationship between joint torques and resultant force and torque applied by the end effector.
+
 It also reveals singularities, configurations where the
 robot loses degrees of freedom or amplifies certain motions.
 `
